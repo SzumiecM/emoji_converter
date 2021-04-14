@@ -3,15 +3,19 @@
 <MainScreen>:
     BoxLayout:
         orientation: 'vertical'
+        padding: 10
 
         Image:
             source: 'kotek.jpg'
+            size_hint_y: 0.8
 
         Button:
             text: 'Update Emotion'
+            size_hint_y: 0.1
 
         Button:
             text: 'Change Avatar'
+            size_hint_y: 0.1
             on_press:
                 root.manager.transition.direction = 'left'
                 root.manager.current = 'avatar'
@@ -19,6 +23,7 @@
 <AvatarCreationScreen>
     BoxLayout:
         orientation: 'vertical'
+        padding: 10
 
         Button:
             text: 'Go To MAIN'

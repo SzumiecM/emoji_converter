@@ -4,18 +4,33 @@
     BoxLayout:
         orientation: 'vertical'
         padding: 10
+        canvas:
+            Color:
+                rgb: (1, 1, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
-        Image:
-            source: 'kotek.jpg'
+        BoxLayout:
+            orientation: 'horizontal'
             size_hint_y: 0.8
+            Label:
+                size_hint_x: 0.2
+            Image:
+                source: 'kotek.jpg'
+                size_hint_x: 0.6
+            Label:
+                size_hint_x: 0.2
 
         Button:
             text: 'Update Emotion'
             size_hint_y: 0.1
+            background_color: (1.18, 2.01, 2.17, 1)
 
         Button:
             text: 'Change Avatar'
             size_hint_y: 0.1
+            background_color: (1.53, 1.78, 1.83, 1)
             on_press:
                 root.manager.transition.direction = 'left'
                 root.manager.current = 'avatar'
@@ -24,6 +39,12 @@
     BoxLayout:
         orientation: 'vertical'
         padding: 10
+        canvas:
+            Color:
+                rgb: (1, 1, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
         Button:
             text: 'Go To MAIN'

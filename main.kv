@@ -1,0 +1,27 @@
+#:kivy 2.0.0
+
+<MainScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        Image:
+            source: 'kotek.jpg'
+
+        Button:
+            text: 'Update Emotion'
+
+        Button:
+            text: 'Change Avatar'
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'avatar'
+
+<AvatarCreationScreen>
+    BoxLayout:
+        orientation: 'vertical'
+
+        Button:
+            text: 'Go To MAIN'
+            on_press:
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'main'

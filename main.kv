@@ -1,5 +1,8 @@
 #:kivy 2.0.0
 
+#:set black (0, 0, 0, 1)
+#:set button_blue (1.53, 1.78, 1.83, 1)
+
 <MainScreen>:
     BoxLayout:
         orientation: 'vertical'
@@ -25,15 +28,24 @@
         Button:
             text: 'Update Emotion'
             size_hint_y: 0.1
-            background_color: (1.18, 2.01, 2.17, 1)
+            background_color: button_blue
+            on_press:
+                self.background_color = black
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'camera'
+            on_touch_up:
+                self.background_color = button_blue
 
         Button:
             text: 'Change Avatar'
             size_hint_y: 0.1
-            background_color: (1.53, 1.78, 1.83, 1)
+            background_color: button_blue
             on_press:
+                self.background_color = black
                 root.manager.transition.direction = 'left'
                 root.manager.current = 'avatar'
+            on_touch_up:
+                self.background_color = button_blue
 
 <AvatarCreationScreen>
     BoxLayout:
@@ -48,6 +60,37 @@
 
         Button:
             text: 'Go To MAIN'
+            background_color: button_blue
             on_press:
+                self.background_color: black
                 root.manager.transition.direction = 'right'
                 root.manager.current = 'main'
+            on_touch_up:
+                self.background_color = button_blue
+
+<CameraScreen>
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+        canvas:
+            Color:
+                rgb: (1, 1, 1)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            id: image_avatar
+
+        Image:
+            id: image_camera
+
+        Button:
+            text: 'Go To MAIN'
+            background_color: button_blue
+            on_press:
+                self.background_color: black
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'main'
+            on_touch_up:
+                self.background_color = button_blue

@@ -4,6 +4,7 @@ from kivy.app import App
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 from kivy.properties import ObjectProperty
+from kivy.uix.button import Button
 from kivy.uix.image import Image
 from kivy.uix.screenmanager import Screen, ScreenManager
 import cv2
@@ -19,6 +20,8 @@ class SwipeableScreen(Screen):
     def on_touch_down(self, touch):
         self._touch_pos_x = touch.pos[0]
 
+        return super(SwipeableScreen, self).on_touch_down(touch)
+
     def on_touch_up(self, touch):
         pos_diff = touch.pos[0] - self._touch_pos_x
         if pos_diff > 0 and self._current > 0:
@@ -27,6 +30,8 @@ class SwipeableScreen(Screen):
         elif pos_diff < 0 and self._current < 2:
             self._screen_manager.transition.direction = 'left'
             self._screen_manager.current = self._screen_list[self._current + 1]
+
+        return super(SwipeableScreen, self).on_touch_up(touch)
 
 
 class MainScreen(SwipeableScreen):
@@ -67,6 +72,9 @@ class CameraScreen(SwipeableScreen):
         self.camera = CameraCV(self)
         self.image_camera = self.ids['image_camera']
         self.image_avatar = self.ids['image_avatar']
+
+    def update_with_emotion(self):
+        print('updating...')
 
 
 class MainApp(App):

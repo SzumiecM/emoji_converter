@@ -14,6 +14,11 @@
                 pos: self.pos
                 size: self.size
 
+        Label:
+            text: 'Main'
+            color: black
+            size_hint_y: 0.2
+
         BoxLayout:
             orientation: 'horizontal'
             size_hint_y: 0.8
@@ -25,23 +30,23 @@
             Label:
                 size_hint_x: 0.2
 
-        Button:
-            text: 'Update Emotion'
-            size_hint_y: 0.1
-            background_normal: ''
-            background_color: button_blue
-            on_press:
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'camera'
+#        Button:
+#            text: 'Update Emotion'
+#            size_hint_y: 0.1
+#            background_normal: ''
+#            background_color: button_blue
+#            on_press:
+#                root.manager.transition.direction = 'right'
+#                root.manager.current = 'camera'
 
-        Button:
-            text: 'Change Avatar'
-            size_hint_y: 0.1
-            background_normal: ''
-            background_color: button_blue
-            on_press:
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'avatar'
+#        Button:
+#            text: 'Change Avatar'
+#            size_hint_y: 0.1
+#            background_normal: ''
+#            background_color: button_blue
+#            on_press:
+#                root.manager.transition.direction = 'left'
+#                root.manager.current = 'avatar'
 
 <AvatarCreationScreen>
     BoxLayout:
@@ -54,14 +59,18 @@
                 pos: self.pos
                 size: self.size
 
-        Button:
-            text: 'Go To MAIN'
-            size_hint_y: 0.1
-            background_normal: ''
-            background_color: button_blue
-            on_press:
-                root.manager.transition.direction = 'right'
-                root.manager.current = 'main'
+        Label:
+            text: 'Avatar'
+            color: black
+
+#        Button:
+#            text: 'Go To MAIN'
+#            size_hint_y: 0.1
+#            background_normal: ''
+#            background_color: button_blue
+#            on_press:
+#                root.manager.transition.direction = 'right'
+#                root.manager.current = 'main'
 
 <CameraScreen>
     BoxLayout:
@@ -87,20 +96,19 @@
 
                 Image:
                     id: image_avatar
-                    size_hint_y: 0.5
+                    size_hint_y: 0.4
 
                 Image:
                     id: image_camera
-                    size_hint_y: 0.5
+                    size_hint_y: 0.4
 
             Label:
                 size_hint_x: 0.3
 
         Button:
-            text: 'Go To MAIN'
-            size_hint_y: 0.1
+            text: 'Save'
+            size_hint_y: 0.2
             background_normal: ''
             background_color: button_blue
             on_press:
-                root.manager.transition.direction = 'left'
-                root.manager.current = 'main'
+                root.update_with_emotion()

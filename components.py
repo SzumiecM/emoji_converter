@@ -29,9 +29,8 @@ class SwipeableScreen(Screen):
         return super(SwipeableScreen, self).on_touch_up(touch)
 
 
-class CameraCV(Widget):
-    def __init__(self, screen, **kw):
-        super(CameraCV, self).__init__(**kw)
+class CameraCV:
+    def __init__(self, screen):
         self.capture = cv2.VideoCapture(0)
         self.screen = screen
         Clock.schedule_interval(self.update, 1.0 / 60.0)
@@ -45,4 +44,13 @@ class CameraCV(Widget):
             self.screen.image_camera.texture = texture
         except:
             pass
-        self.screen.image_avatar.source = os.path.join('img', 'kotek.jpg')
+        self.screen.image_avatar.source = os.path.join('img', 'base.png')
+
+
+class Avatar:
+    def __init__(self, screen):
+        self.screen = screen
+        if os.path.isfile(os.path.join('img', 'saved_avatar.png')):
+            self.screen.image_avatar.source = os.path.join('img', 'saved_avatar.png')
+        else:
+            self.screen.image_avatar.source = os.path.join('img', 'base.png')

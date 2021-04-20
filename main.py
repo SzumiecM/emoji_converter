@@ -1,6 +1,8 @@
+import os.path
+
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
-from components import CameraCV, SwipeableScreen
+from components import CameraCV, SwipeableScreen, Avatar
 
 
 class MainScreen(SwipeableScreen):
@@ -18,6 +20,8 @@ class AvatarCreationScreen(SwipeableScreen):
 
         self.image_avatar = self.ids['image_avatar']
 
+        self.avatar = Avatar(self)
+
 
 class CameraScreen(SwipeableScreen):
     def __init__(self, sm=None, **kw):
@@ -25,9 +29,10 @@ class CameraScreen(SwipeableScreen):
         self._screen_manager = sm
         self._current = 0
 
-        self.camera = CameraCV(self)
         self.image_camera = self.ids['image_camera']
         self.image_avatar = self.ids['image_avatar']
+
+        self.camera = CameraCV(self)
 
     def update_with_emotion(self):
         print('updating...')

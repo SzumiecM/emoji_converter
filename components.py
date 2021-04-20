@@ -2,7 +2,6 @@ import cv2
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 from kivy.uix.screenmanager import Screen
-from kivy.uix.widget import Widget
 import os
 
 

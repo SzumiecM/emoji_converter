@@ -5,14 +5,14 @@ from components import CameraCV, SwipeableScreen
 
 class MainScreen(SwipeableScreen):
     def __init__(self, sm=None, **kw):
-        super().__init__(**kw)
+        super(MainScreen, self).__init__(**kw)
         self._screen_manager = sm
         self._current = 1
 
 
 class AvatarCreationScreen(SwipeableScreen):
     def __init__(self, sm=None, **kw):
-        super().__init__(**kw)
+        super(AvatarCreationScreen, self).__init__(**kw)
         self._screen_manager = sm
         self._current = 2
 

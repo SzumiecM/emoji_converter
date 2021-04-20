@@ -3,6 +3,7 @@ from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 from kivy.uix.screenmanager import Screen
 from kivy.uix.widget import Widget
+import os
 
 
 class SwipeableScreen(Screen):
@@ -36,9 +37,12 @@ class CameraCV(Widget):
         Clock.schedule_interval(self.update, 1.0 / 60.0)
 
     def update(self, dt):
-        _, frame = self.capture.read()
-        buf = cv2.flip(frame, 0).tostring()
-        texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt="bgr")
-        texture.blit_buffer(buf, colorfmt="bgr", bufferfmt="ubyte")
-        self.screen.image_camera.texture = texture
-        self.screen.image_avatar.source = 'kotek.jpg'
+        try:
+            _, frame = self.capture.read()
+            buf = cv2.flip(frame, 0).tostring()
+            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt="bgr")
+            texture.blit_buffer(buf, colorfmt="bgr", bufferfmt="ubyte")
+            self.screen.image_camera.texture = texture
+        except:
+            pass
+        self.screen.image_avatar.source = os.path.join('img', 'kotek.jpg')

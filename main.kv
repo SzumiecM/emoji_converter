@@ -52,13 +52,11 @@
             padding: 20
 
             Button:
-                id: btn_man
                 text: 'man'
                 on_press:
                     root.avatar.choose_man()
 
             Button:
-                id: btn_woman
                 text: 'woman'
                 on_press:
                     root.avatar.choose_woman()
@@ -71,14 +69,17 @@
                 orientation: 'vertical'
 
                 Button:
-                    id: btn_hair_left
                     text: '<'
+                    on_press:
+                    root.avatar.hair_left()
                 Button:
-                    id: btn_eyes_left
                     text: '<'
+                    on_press:
+                    root.avatar.eyes_left()
                 Button:
-                    id: btn_base_left
                     text: '<'
+                    on_press:
+                    root.avatar.base_left()
 
             Image:
                 id: image_avatar
@@ -87,14 +88,17 @@
                 orientation: 'vertical'
 
                 Button:
-                    id: btn_hair_right
                     text: '>'
+                    on_press:
+                    root.avatar.hair_right()
                 Button:
-                    id: btn_eyes_right
                     text: '>'
+                    on_press:
+                    root.avatar.eyes_right()
                 Button:
-                    id: btn_base_right
                     text: '>'
+                    on_press:
+                    root.avatar.base_right()
 
 <CameraScreen>
     BoxLayout:

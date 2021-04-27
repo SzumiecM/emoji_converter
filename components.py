@@ -100,10 +100,29 @@ class Avatar:
         else:
             self.screen.image_avatar.source = os.path.join('img', 'base.png')
 
+    def update(self):
+        print('updating...')
+
     def choose_man(self):
         App.get_running_app().selected_sex = 'man'
-        print(App.get_running_app().selected_sex)
 
     def choose_woman(self):
         App.get_running_app().selected_sex = 'woman'
-        print(App.get_running_app().selected_sex)
+
+    def hair_left(self):
+        pass
+
+    def hair_right(self):
+        pass
+
+    def eyes_left(self):
+        pass
+
+    def eyes_right(self):
+        pass
+
+    def base_right(self):
+        pass
+
+    def base_left(self):
+        pass

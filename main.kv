@@ -48,18 +48,32 @@
 
         BoxLayout:
             orientation: 'horizontal'
-            size_hint_y: 0.8
+            size_hint_y: 0.2
+            padding: 20
+
+            Button:
+                id: btn_man
+                text: 'man'
+
+            Button:
+                id: btn_woman
+                text: 'woman'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: 0.6
 
             BoxLayout:
                 orientation: 'vertical'
 
                 Button:
+                    id: btn_hair_left
                     text: '<'
                 Button:
+                    id: btn_eyes_left
                     text: '<'
                 Button:
-                    text: '<'
-                Button:
+                    id: btn_base_left
                     text: '<'
 
             Image:
@@ -69,12 +83,13 @@
                 orientation: 'vertical'
 
                 Button:
+                    id: btn_hair_right
                     text: '>'
                 Button:
+                    id: btn_eyes_right
                     text: '>'
                 Button:
-                    text: '>'
-                Button:
+                    id: btn_base_right
                     text: '>'
 
 <CameraScreen>

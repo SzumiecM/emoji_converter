@@ -91,6 +91,7 @@ class CameraCV:
             pass
         self.screen.image_avatar.source = os.path.join('img', 'base.png')
 
+
 def next_prev(func):
     def wrapper(*args, **kwargs):
         name, direction = func.__name__.split('_')
@@ -98,6 +99,7 @@ def next_prev(func):
         print(list_)
 
     return wrapper
+
 
 class Avatar:
     def __init__(self, screen):

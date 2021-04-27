@@ -1,11 +1,11 @@
 import pprint
 
 import cv2
+from kivy.app import App
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
 from kivy.uix.screenmanager import Screen
 import os
-import glob
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, Flatten
@@ -35,24 +35,6 @@ model.load_weights('model3.h5')
 cv2.ocl.setUseOpenCL(False)
 
 emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
-
-
-class GlobalImagePaths:
-    paths = {
-        'man': {
-            # 'base': [file for file in os.path.join('images', 'man', 'base') if file.endswith('.png')]
-            'base': glob.glob(os.path.join('images', 'man', 'base', '*.png')),
-            'eyes': glob.glob(os.path.join('images', 'man', 'eyes', '*.png')),
-            'lips': glob.glob(os.path.join('images', 'man', 'lips', '*.png')),
-            'hair': glob.glob(os.path.join('images', 'man', 'hair', '*.png'))
-        }
-    }
-
-    _saved_avatar_path = None
-    _selected_sex = None
-    _current_body = None
-    _current_hair = None
-    _current_eyes = None
 
 
 class SwipeableScreen(Screen):
@@ -108,7 +90,6 @@ class CameraCV:
         except:
             pass
         self.screen.image_avatar.source = os.path.join('img', 'base.png')
-
 
 
 class Avatar:

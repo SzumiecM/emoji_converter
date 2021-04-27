@@ -99,3 +99,11 @@ class Avatar:
             self.screen.image_avatar.source = os.path.join('img', 'saved_avatar.png')
         else:
             self.screen.image_avatar.source = os.path.join('img', 'base.png')
+
+    def choose_man(self):
+        App.get_running_app().selected_sex = 'man'
+        print(App.get_running_app().selected_sex)
+
+    def choose_woman(self):
+        App.get_running_app().selected_sex = 'woman'
+        print(App.get_running_app().selected_sex)

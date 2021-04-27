@@ -54,10 +54,14 @@
             Button:
                 id: btn_man
                 text: 'man'
+                on_press:
+                    root.avatar.choose_man()
 
             Button:
                 id: btn_woman
                 text: 'woman'
+                on_press:
+                    root.avatar.choose_woman()
 
         BoxLayout:
             orientation: 'horizontal'

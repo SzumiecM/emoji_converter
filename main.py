@@ -2,7 +2,7 @@ import os.path
 
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
-from components import CameraCV, SwipeableScreen, Avatar
+from components import CameraCV, SwipeableScreen, Avatar, GlobalImagePaths
 
 
 class MainScreen(SwipeableScreen):
@@ -12,7 +12,7 @@ class MainScreen(SwipeableScreen):
         self._current = 1
 
 
-class AvatarCreationScreen(SwipeableScreen):
+class AvatarCreationScreen(SwipeableScreen):#, GlobalImagePaths):
     def __init__(self, sm=None, **kw):
         super(AvatarCreationScreen, self).__init__(**kw)
         self._screen_manager = sm

@@ -48,15 +48,27 @@ class MainApp(App):
     current_base = 'b1m.png'
     current_hair = None
     current_eyes = 'blue'
+    emotions = ['angry', 'disgusted', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
+    # how i see it is that with paths we gain access to all images, but when it comes to for example eyes
+    # that change with the emotions and are classified by colors, from path we get the right path, but file name
+    # will be extracted from emotions list like images/woman/eyes/blue/happy.png
 
     def build(self):
         self.paths = {
             'man': {
                 'base': glob.glob(os.path.join('images', 'man', 'base', '*.png')),
-                'eyes': glob.glob(os.path.join('images', 'man', 'eyes', '*.png')),
+                'eyes': glob.glob(os.path.join('images', 'man', 'eyes', '*')),
                 'hair': glob.glob(os.path.join('images', 'man', 'hair', '*.png'))
+            },
+            'woman': {
+                'base': glob.glob(os.path.join('images', 'woman', 'base', '*.png')),
+                'eyes': glob.glob(os.path.join('images', 'woman', 'eyes', '*')),
+                'hair': glob.glob(os.path.join('images', 'woman', 'hair', '*.png'))
+
             }
         }
+
+        pprint.pprint(self.paths)
 
         sm = ScreenManager()
         sm.add_widget(MainScreen(name='main', sm=sm))

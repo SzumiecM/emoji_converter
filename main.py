@@ -31,6 +31,7 @@ class CameraScreen(SwipeableScreen):
 
         self.image_camera = self.ids['image_camera']
         self.image_avatar = self.ids['image_avatar']
+        self.label = self.ids['label']
 
         self.camera = CameraCV(self)
 

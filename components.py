@@ -85,7 +85,7 @@ class CameraCV:
                 maxindex = int(np.argmax(prediction))
                 cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255),
                             2, cv2.LINE_AA)
-                print(emotion_dict[maxindex])
+                self.screen.label.text = emotion_dict[maxindex]
 
 
 

@@ -91,6 +91,13 @@ class CameraCV:
             pass
         self.screen.image_avatar.source = os.path.join('img', 'base.png')
 
+def next_prev(func):
+    def wrapper(*args, **kwargs):
+        name, direction = func.__name__.split('_')
+        list_ = App.get_running_app().paths.get(App.get_running_app().selected_sex).get(name)
+        print(list_)
+
+    return wrapper
 
 class Avatar:
     def __init__(self, screen):
@@ -105,24 +112,32 @@ class Avatar:
 
     def choose_man(self):
         App.get_running_app().selected_sex = 'man'
+        self.update()
 
     def choose_woman(self):
         App.get_running_app().selected_sex = 'woman'
+        self.update()
 
+    @next_prev
     def hair_left(self):
         pass
 
+    @next_prev
     def hair_right(self):
         pass
 
+    @next_prev
     def eyes_left(self):
         pass
 
+    @next_prev
     def eyes_right(self):
         pass
 
+    @next_prev
     def base_right(self):
         pass
 
+    @next_prev
     def base_left(self):
         pass

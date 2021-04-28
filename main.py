@@ -42,6 +42,7 @@ class CameraScreen(SwipeableScreen):
 
 
 class MainApp(App):
+    # todo consider moving build stuff to on_start, shitty documentation, gotta verify behaviour on android
     # access via App.get_running_app().<variable_name>
     saved_avatar_path = os.path.join('images', 'saved_avatar.png')
     selected_sex = 'man'
@@ -49,6 +50,7 @@ class MainApp(App):
     selected_hair = None
     selected_eyes = None
     emotions = ['angry', 'disgusted', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
+
     # how i see it is that with paths we gain access to all images, but when it comes to for example eyes
     # that change with the emotions and are classified by colors, from path we get the right path, but file name
     # will be extracted from emotions list like images/woman/eyes/blue/happy.png
@@ -69,9 +71,12 @@ class MainApp(App):
         }
 
         # todo delete these if and lets assume all file will be there
-        self.selected_hair = self.paths.get('man').get('hair')[0] if len(self.paths.get('man').get('hair')) > 0 else None
-        self.selected_eyes = self.paths.get('man').get('eyes')[0] if len(self.paths.get('man').get('eyes')) > 0 else None
-        self.selected_base = self.paths.get('man').get('base')[0] if len(self.paths.get('man').get('base')) > 0 else None
+        self.selected_hair = self.paths.get('man').get('hair')[0] if len(
+            self.paths.get('man').get('hair')) > 0 else None
+        self.selected_eyes = self.paths.get('man').get('eyes')[0] if len(
+            self.paths.get('man').get('eyes')) > 0 else None
+        self.selected_base = self.paths.get('man').get('base')[0] if len(
+            self.paths.get('man').get('base')) > 0 else None
 
         pprint.pprint(self.paths)
 
@@ -80,6 +85,14 @@ class MainApp(App):
         sm.add_widget(AvatarCreationScreen(name='avatar', sm=sm))
         sm.add_widget(CameraScreen(name='camera', sm=sm))
         return sm
+
+    def on_start(self):
+        # todo load saved selected paths
+        pass
+
+    def on_stop(self):
+        # todo save currently selected paths
+        pass
 
 
 if __name__ == '__main__':

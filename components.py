@@ -93,7 +93,7 @@ class CameraCV:
 
 
 def next_prev(func):
-    def wrapper(*args, **kwargs):
+    def wrapper(self):
         name, direction = func.__name__.split('_')
         list_ = App.get_running_app().paths.get(App.get_running_app().selected_sex).get(name)
         curr_attribute = f'selected_{name}'
@@ -113,20 +113,31 @@ def next_prev(func):
 
         print(getattr(App.get_running_app(), curr_attribute))
 
+        return func(self)
+
     return wrapper
 
+
 def select_sex(func):
-    def wrapper(*args, **kwargs):
+    def wrapper(self):
         _, name = func.__name__.split('_')
 
         App.get_running_app().selected_sex, previous = name, App.get_running_app().selected_sex
 
         if previous != name:
-            App.get_running_app().selected_base = App.get_running_app().paths.get(name).get('base')[
-                App.get_running_app().paths.get(previous).get('base').index(App.get_running_app().selected_base)
-            ]
+            for x in ('base', 'eyes', 'hair'):
+                if x == 'base':  # todo remove once we have all files
+                    setattr(App.get_running_app(),
+                            f'selected_{x}',
+                            App.get_running_app().paths.get(name).get(x)[
+                                App.get_running_app().paths.get(previous).get(x).index(
+                                    getattr(App.get_running_app(), f'selected_{x}')
+                                )
+                            ])
 
         print(App.get_running_app().selected_base)
+
+        return func(self)
 
     return wrapper
 
@@ -144,32 +155,32 @@ class Avatar:
 
     @select_sex
     def choose_man(self):
-        pass
+        self.update()
 
     @select_sex
     def choose_woman(self):
-        pass
+        self.update()
 
     @next_prev
     def hair_left(self):
-        pass
+        self.update()
 
     @next_prev
     def hair_right(self):
-        pass
+        self.update()
 
     @next_prev
     def eyes_left(self):
-        pass
+        self.update()
 
     @next_prev
     def eyes_right(self):
-        pass
+        self.update()
 
     @next_prev
     def base_right(self):
-        pass
+        self.update()
 
     @next_prev
     def base_left(self):
-        pass
+        self.update()

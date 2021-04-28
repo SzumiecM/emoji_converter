@@ -90,29 +90,28 @@ class CameraCV:
                 self.screen.label.text = emotion_dict[maxindex]
         except:
             pass
-        self.screen.image_avatar.source = os.path.join('img', 'base.png')
+        # self.screen.image_avatar.source = os.path.join('img', 'base.png')
 
 
 def next_prev(func):
     def wrapper(self):
         name, direction = func.__name__.split('_')
-        list_ = App.get_running_app().paths.get(App.get_running_app().selected_sex).get(name)
-        curr_attribute = f'selected_{name}'
-        curr_file = getattr(App.get_running_app(), curr_attribute)
+        list_ = App.get_running_app().paths.get(App.get_running_app().selected_avatar_attributes['sex']).get(name)
+        curr_file = App.get_running_app().selected_avatar_attributes.get(name)
         curr_index = list_.index(curr_file)
 
         if direction == 'right':
             try:
-                setattr(App.get_running_app(), curr_attribute, list_[curr_index + 1])
+                App.get_running_app().selected_avatar_attributes[name] = list_[curr_index + 1]
             except IndexError:
-                setattr(App.get_running_app(), curr_attribute, list_[0])
+                App.get_running_app().selected_avatar_attributes[name] = list_[0]
         elif direction == 'left':
             try:
-                setattr(App.get_running_app(), curr_attribute, list_[curr_index - 1])
+                App.get_running_app().selected_avatar_attributes[name] = list_[curr_index - 1]
             except IndexError:
-                setattr(App.get_running_app(), curr_attribute, list_[-1])
+                App.get_running_app().selected_avatar_attributes[name] = list_[-1]
 
-        print(getattr(App.get_running_app(), curr_attribute))
+        # print(getattr(App.get_running_app(), curr_attribute))
 
         return func(self)
 
@@ -123,19 +122,18 @@ def select_sex(func):
     def wrapper(self):
         _, name = func.__name__.split('_')
 
-        App.get_running_app().selected_sex, previous = name, App.get_running_app().selected_sex
+        App.get_running_app().selected_avatar_attributes['sex'], previous = name, App.get_running_app().selected_avatar_attributes['sex']
 
         if previous != name:
             for x in ('base', 'eyes', 'mouth'):  # todo add hair
-                setattr(App.get_running_app(),
-                        f'selected_{x}',
-                        App.get_running_app().paths.get(name).get(x)[
+                App.get_running_app().selected_avatar_attributes[x] = App.get_running_app().paths.get(name).get(x)[
                             App.get_running_app().paths.get(previous).get(x).index(
-                                getattr(App.get_running_app(), f'selected_{x}')
+                                App.get_running_app().selected_avatar_attributes.get(x)
+                                # getattr(App.get_running_app(), f'selected_{x}')
                             )
-                        ])
+                        ]
 
-        print(App.get_running_app().selected_base)
+        # print(App.get_running_app().selected_base)
 
         return func(self)
 
@@ -158,7 +156,7 @@ class Avatar:
     def update(self):
         print('updating...')
 
-        base = cv2.imread(App.get_running_app().selected_base, -1)
+        base = cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
         # eyes = cv2.imread('eyes_blue_f_smile.png', -1)
         # nose = cv2.imread('nose_with_freckles.png', -1)
         # lips = cv2.imread('smile_f.png', -1)

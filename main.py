@@ -49,6 +49,7 @@ class MainApp(App):
     selected_base = None
     selected_hair = None
     selected_eyes = None
+    selected_mouth = None
     emotions = ['angry', 'disgusted', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
 
     # how i see it is that with paths we gain access to all images, but when it comes to for example eyes
@@ -60,12 +61,14 @@ class MainApp(App):
             'man': {
                 'base': glob.glob(os.path.join('images', 'man', 'base', '*.png')),
                 'eyes': glob.glob(os.path.join('images', 'man', 'eyes', '*')),
-                'hair': glob.glob(os.path.join('images', 'man', 'hair', '*.png'))
+                'hair': glob.glob(os.path.join('images', 'man', 'hair', '*.png')),
+                'mouth': glob.glob(os.path.join('images', 'man', 'mouth', '*.png'))
             },
             'woman': {
                 'base': glob.glob(os.path.join('images', 'woman', 'base', '*.png')),
                 'eyes': glob.glob(os.path.join('images', 'woman', 'eyes', '*')),
-                'hair': glob.glob(os.path.join('images', 'woman', 'hair', '*.png'))
+                'hair': glob.glob(os.path.join('images', 'woman', 'hair', '*.png')),
+                'mouth': glob.glob(os.path.join('images', 'woman', 'mouth', '*.png'))
 
             }
         }
@@ -77,6 +80,8 @@ class MainApp(App):
             self.paths.get('man').get('eyes')) > 0 else None
         self.selected_base = self.paths.get('man').get('base')[0] if len(
             self.paths.get('man').get('base')) > 0 else None
+        self.selected_mouth = self.paths.get('man').get('mouth')[0] if len(
+            self.paths.get('man').get('mouth')) > 0 else None
 
         pprint.pprint(self.paths)
 

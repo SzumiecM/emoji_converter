@@ -126,15 +126,14 @@ def select_sex(func):
         App.get_running_app().selected_sex, previous = name, App.get_running_app().selected_sex
 
         if previous != name:
-            for x in ('base', 'eyes', 'hair'):
-                if x == 'base':  # todo remove once we have all files
-                    setattr(App.get_running_app(),
-                            f'selected_{x}',
-                            App.get_running_app().paths.get(name).get(x)[
-                                App.get_running_app().paths.get(previous).get(x).index(
-                                    getattr(App.get_running_app(), f'selected_{x}')
-                                )
-                            ])
+            for x in ('base', 'eyes', 'mouth'):  # todo add hair
+                setattr(App.get_running_app(),
+                        f'selected_{x}',
+                        App.get_running_app().paths.get(name).get(x)[
+                            App.get_running_app().paths.get(previous).get(x).index(
+                                getattr(App.get_running_app(), f'selected_{x}')
+                            )
+                        ])
 
         print(App.get_running_app().selected_base)
 

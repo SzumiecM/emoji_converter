@@ -46,11 +46,6 @@ class MainApp(App):
     # todo consider moving build stuff to on_start, shitty documentation, gotta verify behaviour on android
     # access via App.get_running_app().<variable_name>
     saved_avatar_path = os.path.join('images', 'saved_avatar.png')
-    # selected_sex = 'man'
-    # selected_base = None
-    # selected_hair = None
-    # selected_eyes = None
-    # selected_mouth = None
     with open('saved_avatar.json') as file:
         selected_avatar_attributes = json.load(file)
 
@@ -79,15 +74,16 @@ class MainApp(App):
         }
 
         # todo delete these if and lets assume all file will be there
-        self.selected_avatar_attributes['sex'] = 'man'
-        self.selected_avatar_attributes['hair'] = self.paths.get('man').get('hair')[0] if len(
-            self.paths.get('man').get('hair')) > 0 else None
-        self.selected_avatar_attributes['eyes'] = self.paths.get('man').get('eyes')[0] if len(
-            self.paths.get('man').get('eyes')) > 0 else None
-        self.selected_avatar_attributes['base'] = self.paths.get('man').get('base')[0] if len(
-            self.paths.get('man').get('base')) > 0 else None
-        self.selected_avatar_attributes['mouth'] = self.paths.get('man').get('mouth')[0] if len(
-            self.paths.get('man').get('mouth')) > 0 else None
+        if not self.selected_avatar_attributes:
+            self.selected_avatar_attributes['sex'] = 'man'
+            self.selected_avatar_attributes['hair'] = self.paths.get('man').get('hair')[0] if len(
+                self.paths.get('man').get('hair')) > 0 else None
+            self.selected_avatar_attributes['eyes'] = self.paths.get('man').get('eyes')[0] if len(
+                self.paths.get('man').get('eyes')) > 0 else None
+            self.selected_avatar_attributes['base'] = self.paths.get('man').get('base')[0] if len(
+                self.paths.get('man').get('base')) > 0 else None
+            self.selected_avatar_attributes['mouth'] = self.paths.get('man').get('mouth')[0] if len(
+                self.paths.get('man').get('mouth')) > 0 else None
 
         sm = ScreenManager()
         sm.add_widget(MainScreen(name='main', sm=sm))
@@ -101,7 +97,10 @@ class MainApp(App):
 
     def on_stop(self):
         # todo save currently selected paths
-        pass
+
+        with open('saved_avatar.json', 'w') as file:
+            if self.selected_avatar_attributes:
+                file.write(json.dumps(self.selected_avatar_attributes))
 
 
 if __name__ == '__main__':

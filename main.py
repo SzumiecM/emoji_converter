@@ -68,7 +68,7 @@ class MainApp(App):
             }
         }
 
-        # todo
+        # todo delete these if and lets assume all file will be there
         self.selected_hair = self.paths.get('man').get('hair')[0] if len(self.paths.get('man').get('hair')) > 0 else None
         self.selected_eyes = self.paths.get('man').get('eyes')[0] if len(self.paths.get('man').get('eyes')) > 0 else None
         self.selected_base = self.paths.get('man').get('base')[0] if len(self.paths.get('man').get('base')) > 0 else None

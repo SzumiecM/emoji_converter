@@ -142,16 +142,29 @@ def select_sex(func):
     return wrapper
 
 
+def apply_element(template, element, x_offset, y_offset):
+    for y in range(y_offset, y_offset + element.shape[0]):
+        for x in range(x_offset, x_offset + element.shape[1]):
+            if not all(element[y - y_offset, x - x_offset] == [0, 0, 0, 0]):
+                template[y, x] = element[y - y_offset, x - x_offset]
+    return template
+
+
 class Avatar:
     def __init__(self, screen):
         self.screen = screen
-        if os.path.isfile(os.path.join('img', 'saved_avatar.png')):
-            self.screen.image_avatar.source = os.path.join('img', 'saved_avatar.png')
-        else:
-            self.screen.image_avatar.source = os.path.join('img', 'base.png')
+        self.screen.image_avatar.source = App.get_running_app().saved_avatar_path
 
     def update(self):
         print('updating...')
+
+        base = cv2.imread(App.get_running_app().selected_base, -1)
+        # eyes = cv2.imread('eyes_blue_f_smile.png', -1)
+        # nose = cv2.imread('nose_with_freckles.png', -1)
+        # lips = cv2.imread('smile_f.png', -1)
+
+        cv2.imwrite(App.get_running_app().saved_avatar_path, base)
+        self.screen.image_avatar.reload()
 
     @select_sex
     def choose_man(self):

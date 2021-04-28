@@ -50,12 +50,13 @@ class SwipeableScreen(Screen):
 
     def on_touch_up(self, touch):
         pos_diff = touch.pos[0] - self._touch_pos_x
-        if pos_diff > 0 and self._current > 0:
-            self._screen_manager.transition.direction = 'right'
-            self._screen_manager.current = self._screen_list[self._current - 1]
-        elif pos_diff < 0 and self._current < 2:
-            self._screen_manager.transition.direction = 'left'
-            self._screen_manager.current = self._screen_list[self._current + 1]
+        if abs(pos_diff) > 50:
+            if pos_diff > 0 and self._current > 0:
+                self._screen_manager.transition.direction = 'right'
+                self._screen_manager.current = self._screen_list[self._current - 1]
+            elif pos_diff < 0 and self._current < 2:
+                self._screen_manager.transition.direction = 'left'
+                self._screen_manager.current = self._screen_list[self._current + 1]
 
         return super(SwipeableScreen, self).on_touch_up(touch)
 

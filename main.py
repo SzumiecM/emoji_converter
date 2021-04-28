@@ -45,9 +45,9 @@ class MainApp(App):
     # access via App.get_running_app().<variable_name>
     saved_avatar_path = os.path.join('images', 'saved_avatar.png')
     selected_sex = 'man'
-    current_base = 'b1m.png'
-    current_hair = None
-    current_eyes = 'blue'
+    selected_base = None
+    selected_hair = None
+    selected_eyes = None
     emotions = ['angry', 'disgusted', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
     # how i see it is that with paths we gain access to all images, but when it comes to for example eyes
     # that change with the emotions and are classified by colors, from path we get the right path, but file name
@@ -67,6 +67,11 @@ class MainApp(App):
 
             }
         }
+
+        # todo
+        self.selected_hair = self.paths.get('man').get('hair')[0] if len(self.paths.get('man').get('hair')) > 0 else None
+        self.selected_eyes = self.paths.get('man').get('eyes')[0] if len(self.paths.get('man').get('eyes')) > 0 else None
+        self.selected_base = self.paths.get('man').get('base')[0] if len(self.paths.get('man').get('base')) > 0 else None
 
         pprint.pprint(self.paths)
 

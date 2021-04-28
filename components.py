@@ -96,7 +96,37 @@ def next_prev(func):
     def wrapper(*args, **kwargs):
         name, direction = func.__name__.split('_')
         list_ = App.get_running_app().paths.get(App.get_running_app().selected_sex).get(name)
-        print(list_)
+        curr_attribute = f'selected_{name}'
+        curr_file = getattr(App.get_running_app(), curr_attribute)
+        curr_index = list_.index(curr_file)
+
+        if direction == 'right':
+            try:
+                setattr(App.get_running_app(), curr_attribute, list_[curr_index + 1])
+            except IndexError:
+                setattr(App.get_running_app(), curr_attribute, list_[0])
+        elif direction == 'left':
+            try:
+                setattr(App.get_running_app(), curr_attribute, list_[curr_index - 1])
+            except IndexError:
+                setattr(App.get_running_app(), curr_attribute, list_[-1])
+
+        print(getattr(App.get_running_app(), curr_attribute))
+
+    return wrapper
+
+def select_sex(func):
+    def wrapper(*args, **kwargs):
+        _, name = func.__name__.split('_')
+
+        App.get_running_app().selected_sex, previous = name, App.get_running_app().selected_sex
+
+        if previous != name:
+            App.get_running_app().selected_base = App.get_running_app().paths.get(name).get('base')[
+                App.get_running_app().paths.get(previous).get('base').index(App.get_running_app().selected_base)
+            ]
+
+        print(App.get_running_app().selected_base)
 
     return wrapper
 
@@ -112,13 +142,13 @@ class Avatar:
     def update(self):
         print('updating...')
 
+    @select_sex
     def choose_man(self):
-        App.get_running_app().selected_sex = 'man'
-        self.update()
+        pass
 
+    @select_sex
     def choose_woman(self):
-        App.get_running_app().selected_sex = 'woman'
-        self.update()
+        pass
 
     @next_prev
     def hair_left(self):

@@ -54,18 +54,19 @@ class MainApp(App):
 
     def build(self):
         # todo consider saving to file with additional script to update it
+        img_directory = 'imagesV2'
         self.paths = {
             'man': {
-                'base': glob.glob(os.path.join('images', 'man', 'base', '*.png')),
-                'eyes': glob.glob(os.path.join('images', 'man', 'eyes', '*')),
-                'hair': glob.glob(os.path.join('images', 'man', 'hair', '*.png')),
-                'mouth': glob.glob(os.path.join('images', 'man', 'mouth', '*.png'))
+                'base': glob.glob(os.path.join(img_directory, 'man', 'base', '*.png')),
+                'eyes': glob.glob(os.path.join(img_directory, 'man', 'eyes', '*')),
+                'hair': glob.glob(os.path.join(img_directory, 'man', 'hair', '*.png')),
+                'mouth': glob.glob(os.path.join(img_directory, 'man', 'mouth', '*.png'))
             },
             'woman': {
-                'base': glob.glob(os.path.join('images', 'woman', 'base', '*.png')),
-                'eyes': glob.glob(os.path.join('images', 'woman', 'eyes', '*')),
-                'hair': glob.glob(os.path.join('images', 'woman', 'hair', '*.png')),
-                'mouth': glob.glob(os.path.join('images', 'woman', 'mouth', '*.png'))
+                'base': glob.glob(os.path.join(img_directory, 'woman', 'base', '*.png')),
+                'eyes': glob.glob(os.path.join(img_directory, 'woman', 'eyes', '*')),
+                'hair': glob.glob(os.path.join(img_directory, 'woman', 'hair', '*.png')),
+                'mouth': glob.glob(os.path.join(img_directory, 'woman', 'mouth', '*.png'))
 
             }
         }

@@ -38,9 +38,6 @@ class CameraScreen(SwipeableScreen):
 
         self.camera = CameraCV(self)
 
-    def update_with_emotion(self):
-        pprint.pprint(self.current_base)
-
 
 class MainApp(App):
     # todo consider moving build stuff to on_start, shitty documentation, gotta verify behaviour on android

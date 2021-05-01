@@ -92,6 +92,9 @@ class CameraCV:
             pass
         # self.screen.image_avatar.source = os.path.join('img', 'base.png')
 
+    def update_with_emotion(self):
+        pprint.pprint(App.get_running_app().selected_avatar_attributes)
+
 
 def next_prev(func):
     def wrapper(self):
@@ -122,16 +125,18 @@ def select_sex(func):
     def wrapper(self):
         _, name = func.__name__.split('_')
 
-        App.get_running_app().selected_avatar_attributes['sex'], previous = name, App.get_running_app().selected_avatar_attributes['sex']
+        App.get_running_app().selected_avatar_attributes['sex'], previous = name, \
+                                                                            App.get_running_app().selected_avatar_attributes[
+                                                                                'sex']
 
         if previous != name:
             for x in ('base', 'eyes', 'mouth'):  # todo add hair
                 App.get_running_app().selected_avatar_attributes[x] = App.get_running_app().paths.get(name).get(x)[
-                            App.get_running_app().paths.get(previous).get(x).index(
-                                App.get_running_app().selected_avatar_attributes.get(x)
-                                # getattr(App.get_running_app(), f'selected_{x}')
-                            )
-                        ]
+                    App.get_running_app().paths.get(previous).get(x).index(
+                        App.get_running_app().selected_avatar_attributes.get(x)
+                        # getattr(App.get_running_app(), f'selected_{x}')
+                    )
+                ]
 
         # print(App.get_running_app().selected_base)
 

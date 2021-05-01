@@ -35,6 +35,7 @@ model.load_weights('model3.h5')
 cv2.ocl.setUseOpenCL(False)
 
 emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
+emotions = ['angry', 'disgusted', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
 
 
 class SwipeableScreen(Screen):
@@ -66,6 +67,7 @@ class CameraCV:
         self.capture = cv2.VideoCapture(0)
         self.screen = screen
         Clock.schedule_interval(self.update, 1.0 / 60.0)
+        self.screen.image_avatar.source = App.get_running_app().saved_avatar_path
 
     def update(self, dt):
         try:
@@ -114,8 +116,6 @@ def next_prev(func):
             except IndexError:
                 App.get_running_app().selected_avatar_attributes[name] = list_[-1]
 
-        # print(getattr(App.get_running_app(), curr_attribute))
-
         return func(self)
 
     return wrapper
@@ -125,9 +125,8 @@ def select_sex(func):
     def wrapper(self):
         _, name = func.__name__.split('_')
 
-        App.get_running_app().selected_avatar_attributes['sex'], previous = name, \
-                                                                            App.get_running_app().selected_avatar_attributes[
-                                                                                'sex']
+        App.get_running_app().selected_avatar_attributes['sex'], \
+        previous = name, App.get_running_app().selected_avatar_attributes['sex']
 
         if previous != name:
             for x in ('base', 'eyes', 'mouth'):  # todo add hair
@@ -137,8 +136,6 @@ def select_sex(func):
                         # getattr(App.get_running_app(), f'selected_{x}')
                     )
                 ]
-
-        # print(App.get_running_app().selected_base)
 
         return func(self)
 
@@ -159,12 +156,16 @@ class Avatar:
         self.screen.image_avatar.source = App.get_running_app().saved_avatar_path
 
     def update(self):
-        print('updating...')
+        pprint.pprint(App.get_running_app().selected_avatar_attributes)
 
         base = cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
-        # eyes = cv2.imread('eyes_blue_f_smile.png', -1)
-        # nose = cv2.imread('nose_with_freckles.png', -1)
-        # lips = cv2.imread('smile_f.png', -1)
+        eyes = cv2.imread(os.path.join(App.get_running_app().selected_avatar_attributes['eyes'], 'smile.png'), -1)
+        mouth = cv2.imread(App.get_running_app().selected_avatar_attributes['mouth'], -1)
+
+        base = apply_element(
+            apply_element(base, eyes, 32, 28),
+            mouth, 52, 80
+        )
 
         cv2.imwrite(App.get_running_app().saved_avatar_path, base)
         self.screen.image_avatar.reload()

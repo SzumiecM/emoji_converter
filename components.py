@@ -7,7 +7,9 @@ from kivy.graphics.texture import Texture
 from kivy.uix.screenmanager import Screen
 import os
 import numpy as np
+
 from model import model
+from helpers import next_prev, select_sex, apply_element
 
 cv2.ocl.setUseOpenCL(False)
 
@@ -74,64 +76,13 @@ class CameraCV:
                 cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255),
                             2, cv2.LINE_AA)
                 self.screen.label.text = emotion_dict[maxindex]
+                self.update_with_emotion(emotion_dict[maxindex])
         except:
             pass
         # self.screen.image_avatar.source = os.path.join('img', 'base.png')
 
-    def update_with_emotion(self):
+    def update_with_emotion(self, emotion):
         pprint.pprint(App.get_running_app().selected_avatar_attributes)
-
-
-def next_prev(func):
-    def wrapper(self):
-        name, direction = func.__name__.split('_')
-        list_ = App.get_running_app().paths.get(App.get_running_app().selected_avatar_attributes['sex']).get(name)
-        curr_file = App.get_running_app().selected_avatar_attributes.get(name)
-        curr_index = list_.index(curr_file)
-
-        if direction == 'right':
-            try:
-                App.get_running_app().selected_avatar_attributes[name] = list_[curr_index + 1]
-            except IndexError:
-                App.get_running_app().selected_avatar_attributes[name] = list_[0]
-        elif direction == 'left':
-            try:
-                App.get_running_app().selected_avatar_attributes[name] = list_[curr_index - 1]
-            except IndexError:
-                App.get_running_app().selected_avatar_attributes[name] = list_[-1]
-
-        return func(self)
-
-    return wrapper
-
-
-def select_sex(func):
-    def wrapper(self):
-        _, name = func.__name__.split('_')
-
-        App.get_running_app().selected_avatar_attributes['sex'], \
-        previous = name, App.get_running_app().selected_avatar_attributes['sex']
-
-        if previous != name:
-            for x in ('base', 'eyes', 'mouth'):  # todo add hair
-                App.get_running_app().selected_avatar_attributes[x] = App.get_running_app().paths.get(name).get(x)[
-                    App.get_running_app().paths.get(previous).get(x).index(
-                        App.get_running_app().selected_avatar_attributes.get(x)
-                        # getattr(App.get_running_app(), f'selected_{x}')
-                    )
-                ]
-
-        return func(self)
-
-    return wrapper
-
-
-def apply_element(template, element, x_offset, y_offset):
-    for y in range(y_offset, y_offset + element.shape[0]):
-        for x in range(x_offset, x_offset + element.shape[1]):
-            if not all(element[y - y_offset, x - x_offset] == [0, 0, 0, 0]):
-                template[y, x] = element[y - y_offset, x - x_offset]
-    return template
 
 
 class Avatar:

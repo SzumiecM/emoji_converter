@@ -58,7 +58,7 @@ class CameraCV:
         self.tmp_emotion = None
 
     def update(self, dt):
-        if self.screen._current == 0:
+        if self.screen._screen_manager.current == 'camera':
             try:
                 _, frame = self.capture.read()
                 buf = cv2.flip(frame, 0).tostring()
@@ -85,7 +85,7 @@ class CameraCV:
                 pass
 
     def update_with_emotion(self, dt):
-        if self.screen._current == 0:
+        if self.screen._screen_manager.current == 'camera':
             if self.tmp_emotion:
                 cv2.imwrite(
                     App.get_running_app().saved_avatar_path,
@@ -98,6 +98,11 @@ class CameraCV:
             # texture = Texture.create(size=(tmp_avatar.shape[1], tmp_avatar.shape[0]), colorfmt="bgr")
             # texture.blit_buffer(tmp_avatar.tobytes(order=None), colorfmt="bgr", bufferfmt="ubyte")
             # self.screen.image_avatar.texture = texture
+
+    def save(self):
+        print('dupa dupa dupa ', self.tmp_emotion)
+        App.get_running_app().selected_avatar_attributes['emotion'] = self.tmp_emotion
+        create_avatar()
 
 
 class Avatar:

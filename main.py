@@ -50,7 +50,7 @@ class MainApp(App):
 
     def build(self):
         # todo consider saving to file with additional script to update it
-        img_directory = 'imagesV2'
+        img_directory = 'images'
         self.paths = {
             'man': {
                 'base': glob.glob(os.path.join(img_directory, 'man', 'base', '*.png')),

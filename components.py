@@ -54,6 +54,8 @@ class CameraCV:
         self.capture = cv2.VideoCapture(0)
         self.screen = screen
         Clock.schedule_interval(self.update, 1.0 / 60.0)
+        Clock.schedule_interval(self.update_with_emotion, 1.0 / 120.0)
+        self.tmp_emotion = None
 
     def update(self, dt):
         try:
@@ -76,23 +78,24 @@ class CameraCV:
                 cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255),
                             2, cv2.LINE_AA)
                 self.screen.label.text = emotion_dict[maxindex]
-                self.update_with_emotion(emotion_dict[maxindex])
+                self.tmp_emotion = emotion_dict[maxindex]
+                # self.update_with_emotion(emotion_dict[maxindex])
         except:
             pass
 
-    def update_with_emotion(self, emotion):
-        pprint.pprint(App.get_running_app().selected_avatar_attributes)
+    def update_with_emotion(self, dt):
+        if self.tmp_emotion:
+            cv2.imwrite(
+                App.get_running_app().saved_avatar_path,
+                create_avatar(self.tmp_emotion)
+            )
+            self.screen.image_avatar.reload()
 
-        base = cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
-        eyes = cv2.imread(os.path.join(App.get_running_app().selected_avatar_attributes['eyes'], f'{emotion}.png'), -1)
-        mouth = cv2.imread(App.get_running_app().selected_avatar_attributes['mouth'], -1)
-
-        cv2.imwrite(
-            App.get_running_app().saved_avatar_path,
-            create_avatar(base=base, eyes=eyes, mouth=mouth)
-        )
-
-        self.screen.image_avatar.reload()
+        # tmp_avatar = create_avatar(emotion)
+        #
+        # texture = Texture.create(size=(tmp_avatar.shape[1], tmp_avatar.shape[0]), colorfmt="bgr")
+        # texture.blit_buffer(tmp_avatar.tobytes(order=None), colorfmt="bgr", bufferfmt="ubyte")
+        # self.screen.image_avatar.texture = texture
 
 
 class Avatar:
@@ -100,8 +103,6 @@ class Avatar:
         self.screen = screen
 
     def update(self):
-        pprint.pprint(App.get_running_app().selected_avatar_attributes)
-
         cv2.imwrite(
             App.get_running_app().saved_avatar_path,
             create_avatar()

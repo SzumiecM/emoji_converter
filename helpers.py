@@ -56,19 +56,23 @@ def apply_element(template, element, x_offset, y_offset):
     return template
 
 
-def create_avatar(base=None, eyes=None, mouth=None, hair=None):
+def create_avatar(emotion=None):
+    # todo delete in future
+    emotion = emotion if emotion not in ('happy', 'fearful') else 'neutral'
 
-    _base = base if base else cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
+    _base = cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
 
-    _eyes = eyes if eyes else cv2.imread(os.path.join(
+    _eyes = cv2.imread(os.path.join(
         App.get_running_app().selected_avatar_attributes['eyes'],
-        f'{App.get_running_app().selected_avatar_attributes["emotion"]}.png'), -1)
+        f'{emotion}.png' if emotion else f'{App.get_running_app().selected_avatar_attributes["emotion"]}.png'
+    ), -1)
 
-    _mouth = mouth if mouth else cv2.imread(os.path.join(
+    _mouth = cv2.imread(os.path.join(
         App.get_running_app().selected_avatar_attributes['mouth'],
-        f'{App.get_running_app().selected_avatar_attributes["emotion"]}.png'), -1)
+        f'{emotion}.png' if emotion else f'{App.get_running_app().selected_avatar_attributes["emotion"]}.png'
+    ), -1)
 
-    _hair = hair if hair else None
+    _hair = None
 
     _base = apply_element(
         apply_element(_base, _eyes, 32, 28),

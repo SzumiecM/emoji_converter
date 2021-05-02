@@ -39,9 +39,12 @@ class MainApp(App):
     # todo consider moving build stuff to on_start, shitty documentation, gotta verify behaviour on android
     # access via App.get_running_app().<variable_name>
     saved_avatar_path = os.path.join('images', 'saved_avatar.png')
-    with open('saved_avatar.json') as file:
-        selected_avatar_attributes = json.load(file)
-        # todo check if file exists
+
+    if os.path.isfile('saved_avatar.json'):
+        with open('saved_avatar.json') as file:
+            selected_avatar_attributes = json.load(file)
+    else:
+        selected_avatar_attributes = {}
 
     emotions = ['angry', 'disgusted', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
 
@@ -73,12 +76,9 @@ class MainApp(App):
             self.selected_avatar_attributes['sex'] = 'man'
             self.selected_avatar_attributes['hair'] = self.paths.get('man').get('hair')[0] if len(
                 self.paths.get('man').get('hair')) > 0 else None
-            self.selected_avatar_attributes['eyes'] = self.paths.get('man').get('eyes')[0] if len(
-                self.paths.get('man').get('eyes')) > 0 else None
-            self.selected_avatar_attributes['base'] = self.paths.get('man').get('base')[0] if len(
-                self.paths.get('man').get('base')) > 0 else None
-            self.selected_avatar_attributes['mouth'] = self.paths.get('man').get('mouth')[0] if len(
-                self.paths.get('man').get('mouth')) > 0 else None
+            self.selected_avatar_attributes['eyes'] = self.paths.get('man').get('eyes')[0]
+            self.selected_avatar_attributes['base'] = self.paths.get('man').get('base')[0]
+            self.selected_avatar_attributes['mouth'] = self.paths.get('man').get('mouth')[0]
             self.selected_avatar_attributes['emotion'] = 'neutral'
 
         pprint.pprint(self.selected_avatar_attributes)

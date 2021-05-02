@@ -44,6 +44,11 @@ class SwipeableScreen(Screen):
     _touch_pos_x = None
     _screen_manager = None
 
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.image_avatar = self.ids['image_avatar']
+        self.image_avatar.source = App.get_running_app().saved_avatar_path
+
     def on_touch_down(self, touch):
         self._touch_pos_x = touch.pos[0]
 
@@ -61,13 +66,15 @@ class SwipeableScreen(Screen):
 
         return super(SwipeableScreen, self).on_touch_up(touch)
 
+    def on_pre_enter(self, *args):
+        self.image_avatar.reload()
+
 
 class CameraCV:
     def __init__(self, screen):
         self.capture = cv2.VideoCapture(0)
         self.screen = screen
         Clock.schedule_interval(self.update, 1.0 / 60.0)
-        self.screen.image_avatar.source = App.get_running_app().saved_avatar_path
 
     def update(self, dt):
         try:
@@ -153,7 +160,6 @@ def apply_element(template, element, x_offset, y_offset):
 class Avatar:
     def __init__(self, screen):
         self.screen = screen
-        self.screen.image_avatar.source = App.get_running_app().saved_avatar_path
 
     def update(self):
         pprint.pprint(App.get_running_app().selected_avatar_attributes)

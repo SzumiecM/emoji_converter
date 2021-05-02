@@ -20,9 +20,6 @@ class AvatarCreationScreen(SwipeableScreen):
         super(AvatarCreationScreen, self).__init__(**kw)
         self._screen_manager = sm
         self._current = 2
-
-        self.image_avatar = self.ids['image_avatar']
-
         self.avatar = Avatar(self)
 
 
@@ -33,7 +30,6 @@ class CameraScreen(SwipeableScreen):
         self._current = 0
 
         self.image_camera = self.ids['image_camera']
-        self.image_avatar = self.ids['image_avatar']
         self.label = self.ids['label']
 
         self.camera = CameraCV(self)

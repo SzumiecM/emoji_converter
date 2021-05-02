@@ -41,6 +41,7 @@ class MainApp(App):
     saved_avatar_path = os.path.join('images', 'saved_avatar.png')
     with open('saved_avatar.json') as file:
         selected_avatar_attributes = json.load(file)
+        # todo check if file exists
 
     emotions = ['angry', 'disgusted', 'fearful', 'happy', 'neutral', 'sad', 'surprised']
 

@@ -57,10 +57,7 @@ def apply_element(template, element, x_offset, y_offset):
 
 
 def create_avatar(emotion=None):
-
-    # todo delete in future
     emotion = emotion if emotion else App.get_running_app().selected_avatar_attributes["emotion"]
-    emotion = emotion if emotion != 'fearful' else 'neutral'
 
     _base = cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
 

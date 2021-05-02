@@ -58,44 +58,46 @@ class CameraCV:
         self.tmp_emotion = None
 
     def update(self, dt):
-        try:
-            _, frame = self.capture.read()
-            buf = cv2.flip(frame, 0).tostring()
-            texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt="bgr")
-            texture.blit_buffer(buf, colorfmt="bgr", bufferfmt="ubyte")
-            self.screen.image_camera.texture = texture
+        if self.screen._current == 0:
+            try:
+                _, frame = self.capture.read()
+                buf = cv2.flip(frame, 0).tostring()
+                texture = Texture.create(size=(frame.shape[1], frame.shape[0]), colorfmt="bgr")
+                texture.blit_buffer(buf, colorfmt="bgr", bufferfmt="ubyte")
+                self.screen.image_camera.texture = texture
 
-            facecasc = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            faces = facecasc.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+                facecasc = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                faces = facecasc.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
 
-            for (x, y, w, h) in faces:
-                cv2.rectangle(frame, (x, y - 50), (x + w, y + h + 10), (255, 0, 0), 2)
-                roi_gray = gray[y:y + h, x:x + w]
-                cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray, (48, 48)), -1), 0)
-                prediction = model.predict(cropped_img)
-                maxindex = int(np.argmax(prediction))
-                cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255),
-                            2, cv2.LINE_AA)
-                self.screen.label.text = emotion_dict[maxindex]
-                self.tmp_emotion = emotion_dict[maxindex]
-                # self.update_with_emotion(emotion_dict[maxindex])
-        except:
-            pass
+                for (x, y, w, h) in faces:
+                    cv2.rectangle(frame, (x, y - 50), (x + w, y + h + 10), (255, 0, 0), 2)
+                    roi_gray = gray[y:y + h, x:x + w]
+                    cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray, (48, 48)), -1), 0)
+                    prediction = model.predict(cropped_img)
+                    maxindex = int(np.argmax(prediction))
+                    cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255),
+                                2, cv2.LINE_AA)
+                    self.screen.label.text = emotion_dict[maxindex]
+                    self.tmp_emotion = emotion_dict[maxindex]
+                    # self.update_with_emotion(emotion_dict[maxindex])
+            except:
+                pass
 
     def update_with_emotion(self, dt):
-        if self.tmp_emotion:
-            cv2.imwrite(
-                App.get_running_app().saved_avatar_path,
-                create_avatar(self.tmp_emotion)
-            )
-            self.screen.image_avatar.reload()
+        if self.screen._current == 0:
+            if self.tmp_emotion:
+                cv2.imwrite(
+                    App.get_running_app().saved_avatar_path,
+                    create_avatar(self.tmp_emotion)
+                )
+                self.screen.image_avatar.reload()
 
-        # tmp_avatar = create_avatar(emotion)
-        #
-        # texture = Texture.create(size=(tmp_avatar.shape[1], tmp_avatar.shape[0]), colorfmt="bgr")
-        # texture.blit_buffer(tmp_avatar.tobytes(order=None), colorfmt="bgr", bufferfmt="ubyte")
-        # self.screen.image_avatar.texture = texture
+            # tmp_avatar = create_avatar(emotion)
+            #
+            # texture = Texture.create(size=(tmp_avatar.shape[1], tmp_avatar.shape[0]), colorfmt="bgr")
+            # texture.blit_buffer(tmp_avatar.tobytes(order=None), colorfmt="bgr", bufferfmt="ubyte")
+            # self.screen.image_avatar.texture = texture
 
 
 class Avatar:

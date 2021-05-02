@@ -3,7 +3,6 @@ import numpy as np
 
 base = cv2.imread('images/man/base/b4m.png', -1)
 eyes = cv2.imread('images/man/eyes/brown/smile.png', -1)
-# nose = cv2.imread('nose_with_freckles.png', -1)
 lips = cv2.imread('images/man/mouth/neutral.png', -1)
 # print(base.shape)
 # print(eyes.shape)

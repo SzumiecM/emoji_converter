@@ -1,3 +1,6 @@
+import os
+
+import cv2
 from kivy.app import App
 
 
@@ -51,3 +54,25 @@ def apply_element(template, element, x_offset, y_offset):
             if not all(element[y - y_offset, x - x_offset] == [0, 0, 0, 0]):
                 template[y, x] = element[y - y_offset, x - x_offset]
     return template
+
+
+def create_avatar(base=None, eyes=None, mouth=None, hair=None):
+
+    _base = base if base else cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
+
+    _eyes = eyes if eyes else cv2.imread(os.path.join(
+        App.get_running_app().selected_avatar_attributes['eyes'],
+        f'{App.get_running_app().selected_avatar_attributes["emotion"]}.png'), -1)
+
+    _mouth = mouth if mouth else cv2.imread(os.path.join(
+        App.get_running_app().selected_avatar_attributes['mouth'],
+        f'{App.get_running_app().selected_avatar_attributes["emotion"]}.png'), -1)
+
+    _hair = hair if hair else None
+
+    _base = apply_element(
+        apply_element(_base, _eyes, 32, 28),
+        _mouth, 52, 80
+    )
+
+    return _base

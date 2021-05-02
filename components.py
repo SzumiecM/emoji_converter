@@ -9,7 +9,7 @@ import os
 import numpy as np
 
 from model import model
-from helpers import next_prev, select_sex, apply_element
+from helpers import next_prev, select_sex, apply_element, create_avatar
 
 cv2.ocl.setUseOpenCL(False)
 
@@ -79,10 +79,20 @@ class CameraCV:
                 self.update_with_emotion(emotion_dict[maxindex])
         except:
             pass
-        # self.screen.image_avatar.source = os.path.join('img', 'base.png')
 
     def update_with_emotion(self, emotion):
         pprint.pprint(App.get_running_app().selected_avatar_attributes)
+
+        base = cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
+        eyes = cv2.imread(os.path.join(App.get_running_app().selected_avatar_attributes['eyes'], f'{emotion}.png'), -1)
+        mouth = cv2.imread(App.get_running_app().selected_avatar_attributes['mouth'], -1)
+
+        cv2.imwrite(
+            App.get_running_app().saved_avatar_path,
+            create_avatar(base=base, eyes=eyes, mouth=mouth)
+        )
+
+        self.screen.image_avatar.reload()
 
 
 class Avatar:
@@ -92,16 +102,11 @@ class Avatar:
     def update(self):
         pprint.pprint(App.get_running_app().selected_avatar_attributes)
 
-        base = cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
-        eyes = cv2.imread(os.path.join(App.get_running_app().selected_avatar_attributes['eyes'], 'smile.png'), -1)
-        mouth = cv2.imread(App.get_running_app().selected_avatar_attributes['mouth'], -1)
-
-        base = apply_element(
-            apply_element(base, eyes, 32, 28),
-            mouth, 52, 80
+        cv2.imwrite(
+            App.get_running_app().saved_avatar_path,
+            create_avatar()
         )
 
-        cv2.imwrite(App.get_running_app().saved_avatar_path, base)
         self.screen.image_avatar.reload()
 
     @select_sex

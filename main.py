@@ -74,14 +74,11 @@ class MainApp(App):
         # todo delete these if and lets assume all file will be there
         if not self.selected_avatar_attributes:
             self.selected_avatar_attributes['sex'] = 'man'
-            self.selected_avatar_attributes['hair'] = self.paths.get('man').get('hair')[0] if len(
-                self.paths.get('man').get('hair')) > 0 else None
+            self.selected_avatar_attributes['hair'] = self.paths.get('man').get('hair')[0]
             self.selected_avatar_attributes['eyes'] = self.paths.get('man').get('eyes')[0]
             self.selected_avatar_attributes['base'] = self.paths.get('man').get('base')[0]
             self.selected_avatar_attributes['mouth'] = self.paths.get('man').get('mouth')[0]
             self.selected_avatar_attributes['emotion'] = 'neutral'
-
-        pprint.pprint(self.selected_avatar_attributes)
 
         sm = ScreenManager()
         sm.add_widget(MainScreen(name='main', sm=sm))

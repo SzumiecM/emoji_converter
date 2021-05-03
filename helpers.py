@@ -35,11 +35,10 @@ def select_sex(func):
         previous = name, App.get_running_app().selected_avatar_attributes['sex']
 
         if previous != name:
-            for x in ('base', 'eyes', 'mouth'):  # todo add hair
+            for x in ('base', 'eyes', 'mouth', 'hair'):
                 App.get_running_app().selected_avatar_attributes[x] = App.get_running_app().paths.get(name).get(x)[
                     App.get_running_app().paths.get(previous).get(x).index(
                         App.get_running_app().selected_avatar_attributes.get(x)
-                        # getattr(App.get_running_app(), f'selected_{x}')
                     )
                 ]
 
@@ -60,6 +59,7 @@ def create_avatar(emotion=None):
     emotion = emotion if emotion else App.get_running_app().selected_avatar_attributes["emotion"]
 
     _base = cv2.imread(App.get_running_app().selected_avatar_attributes['base'], -1)
+    _hair = cv2.imread(App.get_running_app().selected_avatar_attributes['hair'], -1)
 
     _eyes = cv2.imread(os.path.join(
         App.get_running_app().selected_avatar_attributes['eyes'],
@@ -70,8 +70,6 @@ def create_avatar(emotion=None):
         App.get_running_app().selected_avatar_attributes['mouth'],
         f'{emotion}.png' if emotion else f'{App.get_running_app().selected_avatar_attributes["emotion"]}.png'
     ), -1)
-
-    _hair = None
 
     _base = apply_element(
         apply_element(_base, _eyes, 32, 28),

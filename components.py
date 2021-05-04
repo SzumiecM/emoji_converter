@@ -58,8 +58,8 @@ class CameraCV:
     def __init__(self, screen):
         self.capture = cv2.VideoCapture(0)
         self.screen = screen
-        Clock.schedule_interval(self.update, 1.0 / 60.0)
-        Clock.schedule_interval(self.update_with_emotion, 1.0 / 120.0)
+        Clock.schedule_interval(self.update, 1.0 / 30.0)
+        Clock.schedule_interval(self.update_with_emotion, 1.0)
         self.tmp_emotion = None
 
     def update(self, dt):
@@ -84,7 +84,7 @@ class CameraCV:
                     cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1,
                                 (255, 0, 255),
                                 2, cv2.LINE_AA)
-                    self.screen.label.text = emotion_dict[maxindex]
+
                     self.tmp_emotion = emotion_dict[maxindex]
             except:
                 pass
@@ -92,10 +92,13 @@ class CameraCV:
     def update_with_emotion(self, dt):
         if self.screen._screen_manager.current == 'camera':
             if self.tmp_emotion:
+                self.screen.label.text = self.tmp_emotion
+
                 cv2.imwrite(
                     App.get_running_app().saved_avatar_path,
                     create_avatar(self.tmp_emotion)
                 )
+
                 self.screen.image_avatar.reload()
 
     def save(self):

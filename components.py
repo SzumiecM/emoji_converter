@@ -95,7 +95,6 @@ class CameraCV:
                 self.screen.image_avatar.reload()
 
     def save(self):
-        print('dupa dupa dupa ', self.tmp_emotion)
         App.get_running_app().selected_avatar_attributes['emotion'] = self.tmp_emotion
 
         # todo consider moving imwrite to create_avatar

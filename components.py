@@ -81,11 +81,11 @@ class CameraCV:
                     cropped_img = np.expand_dims(np.expand_dims(cv2.resize(roi_gray, (48, 48)), -1), 0)
                     prediction = model.predict(cropped_img)
                     maxindex = int(np.argmax(prediction))
-                    cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 255),
+                    cv2.putText(frame, emotion_dict[maxindex], (x + 20, y - 60), cv2.FONT_HERSHEY_SIMPLEX, 1,
+                                (255, 0, 255),
                                 2, cv2.LINE_AA)
                     self.screen.label.text = emotion_dict[maxindex]
                     self.tmp_emotion = emotion_dict[maxindex]
-                    # self.update_with_emotion(emotion_dict[maxindex])
             except:
                 pass
 
@@ -97,12 +97,6 @@ class CameraCV:
                     create_avatar(self.tmp_emotion)
                 )
                 self.screen.image_avatar.reload()
-
-            # tmp_avatar = create_avatar(emotion)
-            #
-            # texture = Texture.create(size=(tmp_avatar.shape[1], tmp_avatar.shape[0]), colorfmt="bgr")
-            # texture.blit_buffer(tmp_avatar.tobytes(order=None), colorfmt="bgr", bufferfmt="ubyte")
-            # self.screen.image_avatar.texture = texture
 
     def save(self):
         print('dupa dupa dupa ', self.tmp_emotion)

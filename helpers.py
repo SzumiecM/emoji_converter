@@ -47,7 +47,10 @@ def select_sex(func):
     return wrapper
 
 
-def apply_element(template, element, x_offset, y_offset):
+def apply_element(template, element, y_offset, x_offset=None):
+    if not x_offset:
+        x_offset = int(template.shape[1] / 2 - element.shape[1] / 2) - 1
+
     for y in range(y_offset, y_offset + element.shape[0]):
         for x in range(x_offset, x_offset + element.shape[1]):
             if not all(element[y - y_offset, x - x_offset] == [0, 0, 0, 0]):
@@ -72,8 +75,11 @@ def create_avatar(emotion=None):
     ), -1)
 
     _base = apply_element(
-        apply_element(_base, _eyes, 32, 28),
-        _mouth, 52, 80
+        apply_element(
+            apply_element(_base, _mouth, y_offset=134),
+            _eyes, y_offset=80
+        ),
+        _hair, x_offset=0, y_offset=0
     )
 
     return _base

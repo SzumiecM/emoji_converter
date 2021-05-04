@@ -1,7 +1,6 @@
 #:kivy 2.0.0
 
 #:set black (0, 0, 0, 1)
-#:set button_blue (0.3, 0.4, 1, 1)
 
 <MainScreen>:
     BoxLayout:
@@ -53,11 +52,13 @@
 
             Button:
                 text: 'man'
+                background_color: black
                 on_press:
                     root.avatar.choose_man()
 
             Button:
                 text: 'woman'
+                background_color: black
                 on_press:
                     root.avatar.choose_woman()
 
@@ -70,14 +71,17 @@
 
                 Button:
                     text: '<'
+                    background_color: black
                     on_press:
                         root.avatar.hair_left()
                 Button:
                     text: '<'
+                    background_color: black
                     on_press:
                         root.avatar.eyes_left()
                 Button:
                     text: '<'
+                    background_color: black
                     on_press:
                         root.avatar.base_left()
 
@@ -89,14 +93,17 @@
 
                 Button:
                     text: '>'
+                    background_color: black
                     on_press:
                         root.avatar.hair_right()
                 Button:
                     text: '>'
+                    background_color: black
                     on_press:
                         root.avatar.eyes_right()
                 Button:
                     text: '>'
+                    background_color: black
                     on_press:
                         root.avatar.base_right()
 
@@ -141,7 +148,8 @@
         Button:
             text: 'Save'
             size_hint_y: 0.2
-            background_normal: ''
-            background_color: button_blue
+#            font_name: 'Roboto-Bold.ttf'
+            font_size: 20
+            background_color: black
             on_press:
                 root.camera.save()

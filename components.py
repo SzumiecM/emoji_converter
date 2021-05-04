@@ -47,10 +47,7 @@ class SwipeableScreen(Screen):
 
     def on_pre_enter(self, *args):
         # todo think of a better way or at least put it in some function
-        cv2.imwrite(
-            App.get_running_app().saved_avatar_path,
-            create_avatar()
-        )
+        create_avatar()
         self.image_avatar.reload()
 
 
@@ -94,11 +91,7 @@ class CameraCV:
             if self.tmp_emotion:
                 self.screen.label.text = self.tmp_emotion
 
-                cv2.imwrite(
-                    App.get_running_app().saved_avatar_path,
-                    create_avatar(self.tmp_emotion)
-                )
-
+                create_avatar(self.tmp_emotion)
                 self.screen.image_avatar.reload()
 
     def save(self):
@@ -106,10 +99,7 @@ class CameraCV:
         App.get_running_app().selected_avatar_attributes['emotion'] = self.tmp_emotion
 
         # todo consider moving imwrite to create_avatar
-        cv2.imwrite(
-            App.get_running_app().saved_avatar_path,
-            create_avatar(self.tmp_emotion)
-        )
+        create_avatar(self.tmp_emotion)
 
 
 class Avatar:
@@ -117,11 +107,7 @@ class Avatar:
         self.screen = screen
 
     def update(self):
-        cv2.imwrite(
-            App.get_running_app().saved_avatar_path,
-            create_avatar()
-        )
-
+        create_avatar()
         self.screen.image_avatar.reload()
 
     @select_sex

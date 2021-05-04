@@ -74,12 +74,13 @@ def create_avatar(emotion=None):
         f'{emotion}.png' if emotion else f'{App.get_running_app().selected_avatar_attributes["emotion"]}.png'
     ), -1)
 
-    _base = apply_element(
+    cv2.imwrite(
+        App.get_running_app().saved_avatar_path,
         apply_element(
-            apply_element(_base, _mouth, y_offset=134),
-            _eyes, y_offset=80
-        ),
-        _hair, x_offset=0, y_offset=0
+            apply_element(
+                apply_element(_base, _mouth, y_offset=134),
+                _eyes, y_offset=80
+            ),
+            _hair, x_offset=0, y_offset=0
+        )
     )
-
-    return _base

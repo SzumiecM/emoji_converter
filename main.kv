@@ -14,9 +14,10 @@
                 size: self.size
 
         Label:
-            text: 'Main'
+            text: 'EmojIT'
             color: black
             size_hint_y: 0.2
+            font_size: 50
 
         BoxLayout:
             orientation: 'horizontal'
@@ -44,6 +45,7 @@
             text: 'Avatar'
             color: black
             size_hint_y: 0.2
+            font_size: 50
 
         BoxLayout:
             orientation: 'horizontal'
@@ -53,12 +55,14 @@
             Button:
                 text: 'man'
                 background_color: black
+                font_size: 50
                 on_press:
                     root.avatar.choose_man()
 
             Button:
                 text: 'woman'
                 background_color: black
+                font_size: 50
                 on_press:
                     root.avatar.choose_woman()
 
@@ -72,16 +76,19 @@
                 Button:
                     text: '<'
                     background_color: black
+                    font_size: 50
                     on_press:
                         root.avatar.hair_left()
                 Button:
                     text: '<'
                     background_color: black
+                    font_size: 50
                     on_press:
                         root.avatar.eyes_left()
                 Button:
                     text: '<'
                     background_color: black
+                    font_size: 50
                     on_press:
                         root.avatar.base_left()
 
@@ -94,16 +101,19 @@
                 Button:
                     text: '>'
                     background_color: black
+                    font_size: 50
                     on_press:
                         root.avatar.hair_right()
                 Button:
                     text: '>'
                     background_color: black
+                    font_size: 50
                     on_press:
                         root.avatar.eyes_right()
                 Button:
                     text: '>'
                     background_color: black
+                    font_size: 50
                     on_press:
                         root.avatar.base_right()
 
@@ -133,6 +143,7 @@
                     id: label
                     color: black
                     size_hint_y: 0.2
+                    font_size: 50
 
                 Image:
                     id: image_avatar
@@ -148,8 +159,7 @@
         Button:
             text: 'Save'
             size_hint_y: 0.2
-#            font_name: 'Roboto-Bold.ttf'
-            font_size: 20
+            font_size: 50
             background_color: black
             on_press:
                 root.camera.save()
